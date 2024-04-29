@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Your Website Title" />
+    <meta property="og:description"   content="Your description" />
+    <meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@1,600&family=Noto+Sans+Cypro+Minoan&family=Noto+Sans+SC&family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+     .sidebar {
+            margin-top:56px;
+            height: 100%;
+            width: 90px;
+            position: fixed;
+            top: 0;
+
+            left: -90px; /* Initially hidden off-screen to the left */
+            background-color: black;
+            overflow-x: hidden;
+            transition: 0.5s;
+            border-width: 1px;
+            border-style: solid;
+            border-color: white;
+            z-index: 10000;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background-color: white;
+            margin-top:250px;
+        }
+
+        .item {
+            width: 10px;
+            margin: 10px;
+        }
+
+        .container1 {
+            width:100%;
+            background-color:white;
+            position:fixed;
+            bottom:0px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bottom-element {
+            margin-top: auto;
+        }
+
+        .popupButton {
+            background-color: white;
+            color: white;
+            border: 1px;
+            border-radius: 75px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hover-text {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: calc(100% + 10px);
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .item:hover .hover-text {
+            display: block;
+        }
+
+        body {
+            background-color:  #1D1D1D;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 300px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            width:500px;
+            color:white;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        {% block style %}
+        {% endblock %}
+    </style>
+</head>
+<body style="background-color:#1D1D1D;">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color:white; position:fixed;top:0px; width:100%; z-index: 1000;">
+
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+
+                <li class="nav-item">
+                    <a class="nav-link active ; openBtn"  aria-current="page" href="#" onclick="toggleNav()" style="font-size:25px; padding:1px; color:black; margin-left:0px;"><i class="fa-solid fa-gears"></i></a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link active ; openBtn"  aria-current="page" href="#"  style="font-size:25px; padding:1px; color:black; margin-left:600px;">MY CIVIC SENSE</a>
+                    <img src="{% static 'logo.jpg' %}" alt="Example Image" style="height:50px;width:50px; position:fixed;top:0px;left:890px;">
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+
+<div id="mySidebar" class="sidebar">
+
+    {% if user.username %}
+    <a href="{% url 'bodyandmind:home' %}" style="background-color:black;margin-left:5px;"><i class="fas fa-home"></i></a>
+    <a href="{% url 'bodyandmind:qlogout' %}" style="background-color:black;margin-left:5px;"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+    {% else %}
+    <a href="{% url 'bodyandmind:qlogin' %}" style="background-color:black;margin-left:5px;"><i class="fa-solid fa-user"></i></a>
+    <a href="{% url 'bodyandmind:register1' %}" style="background-color:black;margin-left:5px;"><i class="fa-solid fa-registered"></i></a>
+    {% endif %}
+    <a href="{% url 'bodyandmind:payment' %}" style="background-color:black;margin-left:5px;"><i class="fas fa-credit-card"></i></a>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<br>
+<br>
+
+<div class="container1" style="z-index: 10000;">
+    <div class="bottom-element" >
+        <center>
+        <h6>By: Dr. Fr. Abraham Mulamoottil</h6>
+        </center>
+    </div>
+</div>
+
+<script>
+function toggleNav() {
+    var sidebar = document.getElementById("mySidebar");
+    var mainContent = document.getElementById("main-content");
+
+    if (sidebar.style.left === "-90px") {
+        sidebar.style.left = "0"; // Show the sidebar
+    } else {
+        sidebar.style.left = "-90px"; // Hide the sidebar
+    }
+}
+</script>
+
+</body>
+</html>

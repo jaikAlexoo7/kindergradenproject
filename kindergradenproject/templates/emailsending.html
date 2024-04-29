@@ -1,0 +1,233 @@
+
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block style %}
+
+        body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+}
+
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#preview-area {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#preview-area img,
+#preview-area video,
+#preview-area audio {
+    max-width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: ;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#preview-area {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#preview-area img,
+#preview-area video,
+#preview-area audio {
+    max-width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="alert alert-info" role="alert">
+  {{mail}}
+</div>
+
+
+     <div id="preview-area">
+        {% if element.image %}
+        <img src="{{ element.image.url }}" style="height:250px:" alt="Preview Element">
+         {% elif element.video %}
+          <video controls class="d-block w-100" style="height:200px;">
+                                <source src="{{ element.video.url }}" type="video/mp4">
+          </video>
+         {% endif %}
+
+    </div>
+<br>
+    <h2 style="color:white;">Send Email</h2>
+<br>
+    <form action=" " method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="subject" style="color:white; margin-left:700px;"><b>Subject</b></label>
+            <input type="text"   id="subject" name="s" required>
+        </div>
+        <div>
+            <label for="message" style="color:white; margin-left:700px;"><b>Message</b></label>
+            <textarea id="message"     name="m" rows="4" cols="50" required></textarea>
+        </div>
+
+        <div>
+            <input type="submit" value="Send Email">
+        </div>
+    </form>
+
+    <script>
+        function previewFile(inputId, previewId) {
+            var fileInput = document.getElementById(inputId);
+            var previewArea = document.getElementById(previewId);
+
+            while (previewArea.firstChild) {
+                previewArea.removeChild(previewArea.firstChild);
+            }
+
+            if (fileInput.files.length > 0) {
+                var file = fileInput.files[0];
+                var fileType = file.type.split('/')[0];
+
+                if (fileType === 'image') {
+                    var img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.style.maxWidth = '100%';
+                    previewArea.appendChild(img);
+                } else if (fileType === 'video') {
+                    var video = document.createElement('video');
+                    video.src = URL.createObjectURL(file);
+                    video.controls = true;
+                    video.style.maxWidth = '100%';
+                    previewArea.appendChild(video);
+                } else if (fileType === 'audio') {
+                    var audio = document.createElement('audio');
+                    audio.src = URL.createObjectURL(file);
+                    audio.controls = true;
+                    previewArea.appendChild(audio);
+                }
+            }
+        }
+    </script>
+
+{% endblock %}

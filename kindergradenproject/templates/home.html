@@ -1,0 +1,307 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--        <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>IFrame Example</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
+
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
+
+<!--    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@1,600&family=Noto+Sans+Cypro+Minoan&family=Noto+Sans+SC&family=Roboto:wght@100&display=swap" rel="stylesheet">-->
+
+<!--    <style>-->
+
+
+<!--    .centered-links {-->
+<!--    position: absolute;-->
+<!--    top: 50%;-->
+<!--    left: 50%;-->
+<!--    transform: translate(-50%, -50%);-->
+<!--    text-align: center;-->
+<!--    background-color: #fff;-->
+<!--    padding: 20px;-->
+<!--    border-radius: 10px;-->
+<!--    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);-->
+
+
+<!--}-->
+
+<!--    .centered-links a {-->
+<!--        display: block;-->
+<!--        margin-bottom: 10px;-->
+<!--        text-decoration: none;-->
+<!--        color: #000;-->
+<!--    }-->
+
+<!--    .centered-links hr {-->
+<!--        margin: 5px auto;-->
+<!--        border: none;-->
+<!--        border-top: 1px solid #ccc;-->
+<!--        width: 50%;-->
+<!--    }-->
+
+<!--    .popupButton {-->
+<!--        background-color: white;-->
+<!--        color: white;-->
+<!--        border: 1px;-->
+<!--        border-radius: 75px;-->
+<!--        width: 50px;-->
+<!--        height: 50px;-->
+<!--        cursor: pointer;-->
+<!--    }-->
+
+<!--    .popupButton:hover {-->
+<!--        background-color: red;-->
+<!--    }-->
+
+<!--    .item {-->
+<!--        position: relative;-->
+<!--        display: inline-block;-->
+<!--    }-->
+
+<!--    .hover-text {-->
+<!--        display: none;-->
+<!--        position: absolute;-->
+<!--        top: 50%;-->
+<!--        left: calc(100% + 10px);-->
+<!--        transform: translateY(-50%);-->
+<!--        background-color: rgba(0, 0, 0, 0.8);-->
+<!--        color: white;-->
+<!--        padding: 5px;-->
+<!--        border-radius: 5px;-->
+<!--    }-->
+
+<!--    .item:hover .hover-text {-->
+<!--        display: block;-->
+<!--    }-->
+
+<!--    body {-->
+<!--        background-color: background: rgb(2, 0, 36);-->
+<!--        background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(6, 47, 243, 1) 46%, rgba(0, 212, 255, 1) 100%);-->
+<!--        padding-bottom: 250px; /* Adjust this value to accommodate footer height */-->
+<!--        position: relative;-->
+<!--    }-->
+
+<!--    .footer {-->
+<!--        background-color: #333;-->
+<!--        color: #fff;-->
+<!--        padding: 30px 50px;-->
+<!--        position: absolute;-->
+<!--        bottom: 0;-->
+<!--        left: 0;-->
+<!--        right: 0;-->
+<!--        width: 100%;-->
+<!--        height: 250px;-->
+<!--    }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body style="background-color:background: rgb(2,0,36);-->
+<!--              background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(6,47,243,1) 46%, rgba(0,212,255,1) 100%);">-->
+<!--<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color:white;">-->
+<!--    <div class="container-fluid">-->
+<!--        <a class="navbar-brand" href="#"></a>-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+<!--        <div class="collapse navbar-collapse" id="navbarScroll">-->
+<!--            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="&#45;&#45;bs-scroll-height: 100px;">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active ; openBtn"  aria-current="page" href="#" onclick="toggleNav()" style="font-size:25px; padding:1px; color:black; margin-left:700px;">ARISE</a>-->
+<!--                </li>-->
+<!--                &nbsp;&nbsp;&nbsp;-->
+
+<!--            </ul>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<!--<br>-->
+<!--<br>-->
+<!--    <div class="centered-links">-->
+
+<!--   <div class="item">-->
+<!--   <span class="text"><a href="#" onclick="togglePopup()" class="popupButton"  style="text-decoration: none;color:black;">LKG</a><br></span>-->
+<!--       <div class="hover-text"> water</div>-->
+<!--   </div>-->
+<!--   <hr>-->
+<!--   <div class="item">-->
+<!--   <span class="text"><a href="#" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;">UKG</a><br></span>-->
+<!--       <div class="hover-text"> DAM</div>-->
+<!--   </div>-->
+<!--    <hr>-->
+<!--    <div class="item">-->
+<!--    <span class="text">-->
+<!--            <a href="#" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;">  1 </a><br></span>-->
+<!--       <div class="hover-text">liquid</div>-->
+<!--   </div>-->
+<!--    <hr>-->
+<!--     <div class="item">-->
+<!--     <span class="text"><a href="#" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;"> 2 </a></span>-->
+<!--       <div class="hover-text">juice</div>-->
+<!--       </div>-->
+<!--    <hr>-->
+<!--       <div class="item">-->
+<!--     <span class="text"><a href="#" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;"> 3 </a></span>-->
+<!--       <div class="hover-text">rice water</div>-->
+<!--       </div>-->
+<!--    <hr>-->
+<!--     <div class="item">-->
+<!--     <span class="text"><a href="#" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;"> 4 </a></span>-->
+<!--       <div class="hover-text">rice water</div>-->
+<!--       </div>-->
+<!--    <hr>-->
+<!--     <div class="item">-->
+<!--     <span class="text"><a href="#" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;"> 5 </a></span>-->
+<!--       <div class="hover-text">rice water</div>-->
+<!--       </div>-->
+<!--    <hr>-->
+<!--     <div class="item">-->
+<!--     <span class="text"><a href="#" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;"> 6 </a></span>-->
+<!--       <div class="hover-text">rice water</div>-->
+<!--       </div>-->
+<!--      <hr>-->
+<!--      <div class="item">-->
+<!--     <span class="text"><a href="#" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;"> 7 </a></span>-->
+<!--       <div class="hover-text">rice water</div>-->
+<!--       </div>-->
+<!--    <hr>-->
+<!--         <div class="item">-->
+<!--     <span class="text"><a href="#" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;"> 8 </a></span>-->
+<!--       <div class="hover-text">ricewater</div>-->
+<!--       </div>-->
+<!--    <hr>-->
+<!--    <a href="" onclick="toggleNav()" class="popupButton" style="text-decoration: none;color:black;">9</a><br>-->
+<!--    <hr>-->
+<!--    <a href="#" onclick="toggleNav()" class="popupButton" style="text-decoration: none;color:black;">10</a><br>-->
+<!--    <hr>-->
+<!--    <a href="#"  onclick="toggleNav()" class="popupButton" style="text-decoration: none;color:black;">11</a><br>-->
+<!--     <hr>-->
+<!--    <a href="#"  onclick="toggleNav()" class="popupButton" style="text-decoration: none;color:black;">12</a><br>-->
+<!--        &lt;!&ndash; Other links... &ndash;&gt;-->
+<!--    </div>-->
+
+<!--<div class="item">-->
+<!--    <span class="text">Hover over me!</span>-->
+<!--    <div class="hover-text">This text appears on hover</div>-->
+<!--</div>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<div style="background-color: #333; color: #fff; padding: 30px 50px; position:fixed; left:0; bottom:0;right:0; width;100%; height:250px;" >-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-sm-6">-->
+<!--                <h6 style="font-size: 20px; color:red;">Sabai Body & Mind</h6>-->
+<!--                <p style="font-size: 14px; margin-top: 10px;">Head office:</p>-->
+<!--                <p style="font-size: 12px; margin-top: 5px; margin-left:12px;">55 Thungmon-->
+
+<!-- <p style="font-size: 12px; margin-top: 5px;margin-left:12px;">55 Thungmonkorn road, Thungmonkorn Alley1, Chimplee, Taling Chan, Bangkok, Thailand, 10170</p>-->
+<!--        <p style="font-size: 12px; margin-top: 5px; margin-left:12px;">📱 +66 95 971 7878</p>-->
+<!--      </div>-->
+<!--      <div class="col-sm-6">-->
+<!--        <p style="font-size: 18px; margin-top: 20px; ">Wellness centre @</p>-->
+<!--        <p style="font-size: 12px; margin-top: 5px;margin-left:12px;">Montien Riverside Hotel</p>-->
+<!--        <p style="font-size: 12px; margin-top: 5px;margin-left:12px;">372 Rama III Rd, Bang Khlo, Bang Kho Laem, Bangkok, Thailand 10120</p>-->
+<!--        <p style="font-size: 12px; margin-top: 5px;margin-left:12px;">📱 09571 7878</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--    <center>-->
+<!--        <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-sm-6">-->
+<!--                <a href="https://www.instagram.com/orea2574/" target="_blank" style="color:pink; size:10px;"><i class="fa-brands fa-instagram"></i></a>-->
+
+<!--             </div>-->
+<!--          </div>-->
+<!--            </div>-->
+<!--      </center>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--function togglePopup() {-->
+<!--    var popup = document.getElementById("popup");-->
+<!--    if (popup.style.display === "none" || popup.style.display === "") {-->
+<!--        popup.style.display = "block"; // Show the popup-->
+<!--    } else {-->
+<!--        popup.style.display = "none"; // Hide the popup-->
+<!--    }-->
+<!--}-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+{% extends 'main.html' %}
+{% block style %}
+
+.notification-circle {
+  position: absolute;
+  top: -15px;
+  right: -2px;
+  background-color: black;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+{% endblock %}
+{% block content %}
+<div class="container">
+
+    {% for k in v %}
+    <div class="item">
+
+            {% if request.user.is_editor == True %}
+
+
+
+             <span class="text"><a href="{% url 'bodyandmind:edit1' k.id  %}" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;">{{ k.valuess }}</a><br></span>
+             <div class="notification-circle">{{ k.g }}</div>
+
+
+            {% elif request.user.is_contributer == True %}
+
+             <span class="text"><a href="{% url 'bodyandmind:insert' k.id %}" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;">{{ k.numberss }}</a><br></span>
+             <div class="hover-text"> {{ k.valuess }}</div>
+
+            {% else %}
+
+             <span class="text"><a href="{% url 'bodyandmind:lessons' k.id %}" onclick="togglePopup()" class="popupButton" style="text-decoration: none;color:black;">{{ k.numberss }}</a><br></span>
+             <div class="hover-text"> {{ k.valuess }}</div>
+
+
+
+
+            {% endif %}
+
+
+    </div>
+    {% endfor %}
+
+    <!-- Add other items here -->
+</div>
+    <!-- Remaining items -->
+<br>
+<br>
+
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,62 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block style %}
+body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #reader {
+      width: 250px;
+      height: 250px;
+      margin: 0 auto;
+      margin-top: 150px;
+      border: 1px solid #ddd;
+      display: flex; /* Added for better image alignment */
+      justify-content: center; /* Added for better image alignment */
+      align-items: center; /* Added for better image alignment */
+    }
+
+    #scan-result {
+      text-align: center;
+      margin-top: 20px;
+    }
+{% endblock %}
+
+{% block content %}
+
+  <h1>QR Code Scanner</h1>
+  <div id="reader">
+      <img src="{% static 'grey.jpg' %}" alt="Image description">
+  </div>
+  <p id="scan-result"></p>
+
+
+  <script>
+    const reader = new Html5QrcodeScanner("reader");
+    reader.render().then(() => {
+      console.log("QR code reader ready!");
+    }).catch((err) => {
+      // Handle errors (e.g. permission denied)
+      console.error(err);
+    });
+
+    reader.qrbox = { width: 250, height: 250 }; // Optional: Set QR detection area size
+
+    reader.scan().then(displayQRCodeData).catch((err) => {
+      // Handle scan failure (e.g. camera access denied)
+      console.error(err);
+    });
+
+    function displayQRCodeData(data) {
+      document.getElementById("scan-result").innerHTML = `Scanned: ${data}`;
+    }
+
+</script>
+{% endblock %}

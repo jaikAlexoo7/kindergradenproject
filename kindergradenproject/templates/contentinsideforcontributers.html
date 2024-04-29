@@ -1,0 +1,157 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block style %}
+
+.col-sm-3 {
+    margin-top: 20px; /* Adjust as needed */
+    margin-bottom: 20px; /* Add margin-bottom to create separation */
+}
+
+.container {
+    background-color: transparent;
+    margin-left: 100px;
+    margin-top: 100px;
+}
+
+.card {
+    transition: transform 0.3s, box-shadow 0.3s, height 0.3s; /* Add transition for height */
+    height: 320px; /* Set a fixed height for the card */
+    overflow: hidden; /* Hide any content that exceeds the fixed height */
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    height: 350px; /* Increase height on hover */
+}
+
+.card-body {
+    height: 100px; /* Set a fixed height for the card body */
+    overflow: hidden; /* Hide any content that exceeds the fixed height */
+    padding: 20px;
+}
+
+.upload-form {
+    position: fixed;
+    bottom: 100px; /* Adjust the distance from the bottom as needed */
+    right: 20px;
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    z-index: 999;
+}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row" style="margin-top:10px;">
+        {% for obj in m %}
+        <div class="col-sm-3" style="margin-top:20px;">
+            <div class="card mb-3" style="width: 18rem;">
+                <div id="carouselExampleSlidesOnly_{{ forloop.counter }}" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% if obj.image %}
+                        <div class="carousel-item active">
+                            <img src="{{ obj.image.url }}" class="card-img-top" alt="Description of the image" style="height:200px;">
+                        </div>
+                        {% elif obj.video  %}
+                        <div class="carousel-item active">
+                            <video controls class="card-img-top" style="height:200px;">
+                                <source src="{{ obj.video.url }}" type="video/mp4">
+                            </video>
+                        </div>
+                        {% elif obj.audio %}
+                        <div class="carousel-item active">
+                            <audio controls class="card-img-top" style="height:200px;">
+                                <source src="{{ obj.audio.url }}" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Courtesy: {{ obj.uploader.username }}</p>
+                    <p class="card-text">Courtesy: {{ obj.vari }}</p>
+                </div>
+            </div>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {% endfor %}
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="upload-form" style="display: none; background-color: transparent; border: none;">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="video" class="btn btn-primary btn-browse" style="background-color: transparent; border: none; color:red;">Choose Video<input type="file" name="a" id="video" accept="video/*" onchange="displayFileName('video')" style="display: none;"></label>
+        <span id="video-name" class="file-info" style="color:red;"></span>
+    </div>
+    <div class="form-group">
+        <label for="audio" class="btn btn-primary btn-browse" style="background-color: transparent; border: none; color:red;">Choose Audio<input type="file" name="b" id="audio" accept="audio/*" onchange="displayFileName('audio')" style="display: none;"></label>
+        <span id="audio-name" class="file-info" style="color:red;"></span>
+    </div>
+    <div class="form-group">
+        <label for="image" class="btn btn-primary btn-browse" style="background-color: transparent; border: none; color:red;">Choose Image<input type="file" name="c" id="image" accept="image/*" onchange="displayFileName('image')" style="display: none;"></label>
+        <span id="image-name" class="file-info" style="color:red;"></span>
+    </div>
+    <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary" style="background-color: transparent; border: none; color:red;">Submit</button>
+    </div>
+</form>
+
+<button id="show-form-btn" class="btn btn-primary" style="position:fixed; bottom:30px; right:20px; z-index:999;">Upload Form</button>
+
+<script>
+    document.getElementById('show-form-btn').addEventListener('click', function() {
+        var form = document.querySelector('.upload-form');
+        if (form.style.display === 'block') {
+            form.style.display = 'none';
+        } else {
+            form.style.display = 'block';
+        }
+    });
+
+     function displayFileName(inputId) {
+        var input = document.getElementById(inputId);
+        var fileNameSpan = document.getElementById(inputId + "-name");
+        var buttonLabel = input.previousElementSibling; // Get the label element
+
+    // Select all file inputs except the current one
+    var otherInputs = document.querySelectorAll("input[type='file']:not(#" + inputId + ")");
+
+    // Clear previous file inputs
+    otherInputs.forEach(function(input) {
+        input.value = '';
+        var fileNameSpan = document.getElementById(input.id + "-name");
+        fileNameSpan.textContent = '';
+    });
+
+
+
+        if (input.files.length > 0) {
+            fileNameSpan.textContent = input.files[0].name;
+            buttonLabel.textContent = input.files[0].name;
+        } else {
+            fileNameSpan.textContent = '';
+            buttonLabel.textContent = 'Choose ' + inputId.charAt(0).toUpperCase() + inputId.slice(1); // Reset to default label
+        }
+    }
+
+    function deleteFile(inputId) {
+        var input = document.getElementById(inputId);
+        var fileNameSpan = document.getElementById(inputId + "-name");
+        input.value = ''; // Clear the file input
+        fileNameSpan.textContent = ''; // Clear the displayed file name
+    }
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,275 @@
+{% extends 'main.html' %}
+{% block style %}
+.container2 {
+
+}
+
+.card {
+    z-index: 1;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    width: 1000px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    left:20px;
+    top:70px;
+    right:70px;
+    bottom:40px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img,
+.card video,
+.card audio {
+    max-width: 100%;
+    height: 500px;
+    border-radius: 8px;
+    display: block;
+}
+
+
+
+.overlay .content {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Style for the audio container */
+.card[data-type="audio"] {
+    position: relative; /* Position relative for absolute positioning of controls */
+    display: inline-block; /* Make the container inline block */
+}
+
+/* Style for the audio element */
+#audio-player,
+#myaudio {
+    width: 100%; /* Set width to 100% */
+    outline: none; /* Remove default focus outline */
+}
+
+/* Apply styling to the audio element while it's playing */
+#myaudio:playing {
+    /* Example styling effects */
+    border: 2px solid #007bff; /* Blue border */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Light blue box shadow */
+    background-color: #f8f9fa; /* Light gray background */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+
+.like-button-container {
+  background-color:transparent;
+  position: fixed;
+  bottom: 70px;
+  right: 400px;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.like-button {
+  color:red;
+  width: 50px;
+  height: 50px;
+
+  border: none;
+  border-radius: 50%; /* Make it a circle */
+  cursor: pointer;
+  transition: color 0.3s ease;
+  outline: none; /* Remove default button outline */
+  z-index: 1111;
+}
+
+.like-button:hover {
+  background-color: #aaa;
+}
+
+
+
+
+{% endblock %}
+
+{% block content %}
+<div class="container2">
+    {% if post.image %}
+    <div class="card" data-type="image" data-src="path_to_image.jpg">
+        <img src="{{ post.image.url }}" alt="Image">
+    </div>
+
+    {% elif post.audio %}
+    <div class="card" data-type="audio" data-src="path_to_audio.mp3">
+        <audio id="myaudio" controls>
+            <source src="{{ post.audio.url }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    {% elif post.video %}
+    <div class="card" data-type="video" data-src="path_to_video.mp4">
+        <video id="myVideo" controls>
+            <source src="{{ post.video.url }}" type="video/mp4">
+            Your browser does not support the video element.
+        </video>
+    </div>
+    {% endif %}
+
+
+
+     <div class="like-button-container" >
+           <a  href="{% url 'bodyandmind:like' post.yourprimarykeyfield %}" class="like-button"  style="color:red;"><i class="fa fa-heart" aria-hidden="true" style="font-size: 24px;"></i></a>
+
+     </div>
+
+     <div style="position: fixed; bottom: 65px; right: 600px; z-index: 1000;">
+    <div class="like-button" style="background-color: black; color: white; width: 65px; height: 20px; line-height: 20px; text-align: center; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); cursor: pointer; transition: background-color 0.3s ease;">
+        {{ r }} Likes
+    </div>
+    </div>
+
+
+
+
+
+
+</div>
+
+<div class="comments-container" style="background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); height: 600px; width: 300px; position: fixed; right: 20px; bottom: 0px; top: 90px;overflow-y: auto;">
+    <div style="display: flex; flex-direction: column; height: 100%;">
+
+        {% for i in m1 %}
+        {% if i.comments == None %}
+
+            {% else %}
+               <div class="comments-container" style="background-color: black; max-height: calc(100% - 90px); width: 300px; border: 1px; padding-left: 30px; padding-top: 4px; margin-top: 3px; position: relative;">
+                  <p style="color: white;">{{ i.comments }}</p>
+                  <p style="font-size: 13px; color: white; position: absolute; bottom: 0; right: 0;">({{ i.user.username }})</p>
+               </div>
+            {% endif %}
+
+
+        {% endfor %}
+
+        <div style="margin-top: 10px;">
+            <form id="commentForm" method="POST" action="{% url 'bodyandmind:comment' post.yourprimarykeyfield %}">
+                {% csrf_token %}
+                 <input type="text" id="commentInput" name="n" placeholder="Add a comment" style="width: 230px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; position:fixed;bottom:60px;">
+                 <input type="submit" value="Submit"  style="background-color: black; color: #fff; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer; position: fixed; bottom: 60px; right: 20px; text-decoration: none;">
+            </form>
+        </div>
+    </div>
+</div>
+
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var likeCounter = 0;
+    var commentCounter = 0;
+
+    function likePost() {
+        likeCounter++;
+        document.getElementById("likeCount").textContent = likeCounter;
+    }
+
+    function commentOnPost() {
+        commentCounter++;
+        document.getElementById("commentCount").textContent = commentCounter;
+
+        // Simulate adding a comment
+        var comment = document.createElement("p");
+        comment.textContent = "Comment " + commentCounter;
+        document.getElementById("comments-container").appendChild(comment);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+    var video = document.getElementById("myVideo");
+    var audio = document.getElementById("myaudio");
+
+    // Add event listener for 'ended' event on video
+    if (video) {
+        video.addEventListener("ended", function() {
+            // Function to send signal using AJAX
+            sendVideoSignal();
+        });
+    }
+
+    // Add event listener for 'ended' event on audio
+    if (audio) {
+        audio.addEventListener("ended", function() {
+            // Function to send signal using AJAX
+            sendAudioSignal();
+        });
+    }
+});
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+function sendVideoSignal() {
+    // AJAX request for video signal
+    // Customize this AJAX request based on your backend endpoint and data
+    $.ajax({
+        headers: { "X-CSRFToken": getCookie("csrftoken") },
+        url: '/video/',
+        type: 'POST',
+        data: { signal: 'video_finished' },
+        success: function(response) {
+            console.log('Video signal sent successfully.');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error sending video signal:', error);
+        }
+    });
+}
+
+function sendAudioSignal() {
+    // AJAX request for audio signal
+    // Customize this AJAX request based on your backend endpoint and data
+    $.ajax({
+        headers: { "X-CSRFToken": getCookie("csrftoken") },
+        url: '/audio/',
+        type: 'POST',
+        data: { signal : 'audio_finished' },
+        success: function(response) {
+            console.log('Audio signal sent successfully.');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error sending audio signal:', error);
+        }
+    });
+}
+
+
+var likeButton = document.querySelector('.like-button');
+likeButton.addEventListener('click', function() {
+        // Check if 'm' has a value after clicking the like button
+        var m = "{{ m }}";
+        if (m) {
+            // Display the alert with the message
+            alert("u already liked this post");
+        } else {
+            // Reset 'm' to empty string if it's not already set
+            m = "";
+        }
+    });
+</script>
+
+
+
+{% endblock %}

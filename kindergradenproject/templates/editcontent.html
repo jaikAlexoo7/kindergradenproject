@@ -1,0 +1,148 @@
+{% extends 'main.html' %}
+
+{% block style %}
+.card-container {
+    margin-left: 100px;
+    margin-top: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Adjust the gap between cards */
+}
+
+.card {
+    width: calc(25% - 15px); /* Adjust the width of each card */
+    height: 300px;
+    overflow: hidden;
+    transition: transform 0.5s, opacity 0.5s; /* Add transition effect */
+    opacity: 0; /* Initially hide the cards */
+}
+
+.card.visible {
+    opacity: 1; /* Show the cards with transition effect */
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s;
+}
+
+.card:hover img {
+    transform: scale(1.2);
+}
+
+p.custom-link {
+    text-decoration: none !important;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.email-box {
+  position: fixed;
+  top: 70px;
+  right: 80px;
+  padding: 10px;
+  background-color: transparent;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.email-box i {
+  font-size: 30px;
+  margin-right: 5px;
+}
+
+
+.email-box button:hover {
+  background-color: #0056b3;
+}
+
+.notification-circle {
+  position: absolute;
+  top: -5px;
+  right: -2px;
+  background-color: red;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+{% endblock %}
+
+
+{% block content %}
+{% load static %}
+
+<div class="email-box" >
+    <i class="fas fa-envelope" style="color:white;"></i>
+    <div class="notification-circle">{{m}}</div>
+</div>
+
+<div class="card-container" >
+    {% for item in k %}
+    <div class="card" id="card{{ forloop.counter }}">
+        <div class="card-wrapper">
+            <a href="{% url 'bodyandmind:enlarge' item.yourprimarykeyfield  %}">
+                {% if item.image %}
+                <div style="width: 100%; height: 200px; overflow: hidden;">
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="...">
+                </div>
+                {% elif item.video %}
+                <div style="width: 100%; height: 200px; overflow: hidden;">
+                    <video controls style="width:100%;">
+                        <source src="{{ item.video.url }}" type="video/mp4">
+                    </video>
+                </div>
+                {% else %}
+                <div style="width: 100%; height: 200px; overflow: hidden;">
+                    <audio controls class="d-block w-100" style="height:200px;">
+                        <source src="{{ item.audio.url }}" type="audio/mpeg">
+                    </audio>
+                </div>
+                {% endif %}
+            </a>
+            <div class="card-body">
+                <p class="custom-link;" style=" text-decoration: none;  color: #007bff;   font-weight: bold;">Courtesy: {{ item.uploader.username }}</p>
+
+                <a href="{% url 'bodyandmind:mailto' item.yourprimarykeyfield %}">
+                    <i class="fas fa-paper-plane"></i>
+                </a>
+                <a href="{% url 'bodyandmind:edit2' item.yourprimarykeyfield %}">
+                    <i class="fas fa-check-circle"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('visible');
+            }, index * 100); // Delay each card animation
+        });
+    });
+
+
+</script>
+{% endblock %}
+
+
+
+
+
+
