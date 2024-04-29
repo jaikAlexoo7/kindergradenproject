@@ -1,0 +1,10 @@
+
+
+open the file in pycharm 
+
+pip install django
+
+python manage.py runserver
+
+
+
