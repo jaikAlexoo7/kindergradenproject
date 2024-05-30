@@ -1,0 +1,1 @@
+web gunicorn kindergradenproject.wsgi:application --log-file-
